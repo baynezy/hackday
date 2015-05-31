@@ -4,5 +4,8 @@
   "description": "",
   "main": "app.js",
   "author": "Simon Baynes",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.4"
+  }
 }
