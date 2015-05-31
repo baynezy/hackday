@@ -1,0 +1,8 @@
+{
+  "name": "hackday",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "author": "Simon Baynes",
+  "license": "ISC"
+}
