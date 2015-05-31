@@ -1,9 +1,14 @@
 var express = require("express"),
+	juicer = require("./custom_modules/juicer"),
 	app = express();
 
 
 app.get("/", function(req, res) {
-	res.send("Hello World!");
+	var params = {
+		q : "chelsea",
+		size : 10
+	};
+	juicer.getArticles(params, res);
 });
 
 var server = app.listen(3000, function() {
