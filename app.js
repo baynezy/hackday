@@ -13,6 +13,14 @@ app.get("/", function(req, res) {
 	});
 });
 
+app.get("/article", function(req, res) {
+	var uri = "http://www.bbc.co.uk/news/business-31980802";
+	
+	juicer.getArticle(uri, function(article) {
+		res.json(article);
+	});
+});
+
 var server = app.listen(3000, function() {
 	
 });
