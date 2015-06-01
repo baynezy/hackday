@@ -1,24 +1,15 @@
 var apiKey = "3O320TNQSzygKXF8frRiNBQnAANSyUl7",
-	http = require("http");
+	request = require("request");
 
 exports.getArticles = function (params, res) {
-	var options = {
-		host : "data.test.bbc.co.uk",
-		path  : "/bbcrd-juicer/articles?"
-	};
+	var uri = "http://data.test.bbc.co.uk/bbcrd-juicer/articles?apikey=" + apiKey;
 	
-	if (params.q != undefined) options.path += "&q=" + params.q;
-	if (params.size != undefined) options.path += "&size=" + params.size;
+	if (params.q != undefined) uri += "&q=" + params.q;
+	if (params.size != undefined) uri += "&size=" + params.size;
 	
-	var callback = function (response) {
-		var str = "";
-		
-		response.on ("data", function (chunk) {
-			str += chunk;
-		});
-		
-		res.json(str);
-	};
-	
-	http.request(options, callback);
+	request(uri, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			res.json(body);
+		}
+	});
 };
