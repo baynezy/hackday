@@ -8,7 +8,9 @@ app.get("/", function(req, res) {
 		q : "chelsea",
 		size : 10
 	};
-	juicer.getArticles(params, res);
+	juicer.getArticles(params, function(articles){
+		res.json(articles);
+	});
 });
 
 var server = app.listen(3000, function() {
