@@ -7,8 +7,8 @@ exports.getArticles = function (params, res) {
 		path  : "/bbcrd-juicer/articles?"
 	};
 	
-	if (params.q != undefined) options.path += "q=" + params.q;
-	if (params.size != undefined) options.path += "size=" + params.size;
+	if (params.q != undefined) options.path += "&q=" + params.q;
+	if (params.size != undefined) options.path += "&size=" + params.size;
 	
 	var callback = function (response) {
 		var str = "";
