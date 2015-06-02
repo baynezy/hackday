@@ -7,7 +7,7 @@ exports.getEntities = function(entity, callback) {
 	request(uri, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			parseXml(body, function(err, result) {
-				callback(result);	
+				callback(result.ArrayOfResult.Result);	
 			});
 		}
 	});

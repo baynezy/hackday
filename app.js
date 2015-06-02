@@ -2,6 +2,7 @@ var express = require("express"),
 	juicer = require("./custom_modules/juicer"),
 	miner = require("./custom_modules/wikiminer"),
 	dbpedia = require("./custom_modules/dbpedia"),
+	parser = require("./custom_modules/entity-parser"),
 	app = express();
 
 
@@ -35,6 +36,14 @@ app.get("/dbpedia", function (req, res) {
 	var entity = "David Cameron";
 	
 	dbpedia.getEntities(entity, function(data) {
+		res.json(data);
+	});
+});
+
+app.get("/entityparser", function (req, res) {
+	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
+	
+	parser.getEntities(uri, function(data) {
 		res.json(data);
 	});
 });
