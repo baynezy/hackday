@@ -18,7 +18,7 @@ exports.getArticles = function (params, callback) {
 	
 	request(uri, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			callback(body);
+			callback(JSON.parse(body));
 		}
 	});
 };
@@ -31,7 +31,7 @@ exports.getArticle = function (uri, callback) {
 	
 	request(uri, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			callback(body);
+			callback(JSON.parse(body));
 		}
 	});
 };

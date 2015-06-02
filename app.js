@@ -25,8 +25,6 @@ app.get("/article", function(req, res) {
 app.get("/miner", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
-	res.set("Content-Type", "application/json");
-	
 	miner.extractEntities(uri, function (data) {
 		res.json(data);
 	});
