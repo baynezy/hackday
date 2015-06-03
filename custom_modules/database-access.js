@@ -1,6 +1,11 @@
 //DB Setup
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath('./aws.database_hidden.json');
+AWS.config.region = 'eu-west-1';
+
+AWS.config.accessKeyId = process.env.ACCESS_KEY_ID;
+
+AWS.config.secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
 var dd = new AWS.DynamoDB();
 var tableName = 'bbchack-day-annotation';
   
