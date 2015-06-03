@@ -49,12 +49,10 @@ exports.getEntitiesFromText = function(text, callback) {
 			};
 			
 			dbpedia.getEntities(item.title, function(entity) {
-				console.log(item.title);
 				for (var i = 0; i < entity.length; i++) {
 					var uri = entity[i].URI[0];
 					var parts = uri.split("/");
 					var lastPart = parts[parts.length - 1].replace("_", " ");
-					console.log(lastPart);
 					
 					if (lastPart.toLowerCase() == item.title.toLowerCase()) {
 						newEntity.uri = uri;
@@ -63,7 +61,6 @@ exports.getEntitiesFromText = function(text, callback) {
 					}
 				}
 				
-				console.log(newEntity);
 				
 				if (newEntity.uri.length > 0) {
 					callback(null, newEntity);
@@ -72,7 +69,6 @@ exports.getEntitiesFromText = function(text, callback) {
 			});
 		
 		}, function(err, results) {
-			console.log(results);
 			callback(null, results);
 		});
 	});
