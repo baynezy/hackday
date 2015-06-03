@@ -5,6 +5,7 @@ var express = require("express"),
 	parser = require("./custom_modules/entity-parser"),
 	mustacheExpress = require('mustache-express'),
 	databaseaccess = require("./custom_modules/database-access"),
+	bodyParser = require('body-parser'),
 	app = express();
 	
 app.engine('html', mustacheExpress());
@@ -14,6 +15,7 @@ app.set('view engine', 'html');
 
 app.use(express.static('./public'));
 
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
   res.render('index', {
@@ -23,10 +25,12 @@ app.get('/', function (req, res) {
   });
 });
 
-app.get("/api/annotations", function (req, res) {
+app.post("/api/annotations", function (req, res) {
 	console.log("POST: ");
   	console.log(req.body);
-	databaseaccess.createAnnotationForVideo('123', '456', '789');
+	  var d = new Date();
+	  
+	databaseaccess.createAnnotationForVideo(d.getTime().toString(), req.body.current_time, 'video_id-1');
 	res.json({})
 });
 
