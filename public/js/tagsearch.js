@@ -1,0 +1,5 @@
+var tagsearch = {
+	init : function() {
+		
+	}
+};
