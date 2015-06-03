@@ -1,16 +1,16 @@
 var tagsearch = {
 	init : function() {
 		$("form#frm-tag-search").on("submit", function () {
-			var event = jQuery.Event("tagsearch");
-			event.search = $("#annotation-title").val();
+			var searchEvent = jQuery.Event("tagsearch");
+			searchEvent.search = $("#annotation-title").val();
 			
-			var event_create = jQuery.Event("tagtimeline");
+			var tagTimelineEvent = jQuery.Event("tagtimeline");
 			var myVideo = document.getElementById("myVideo");
 			console.log(myVideo.currentTime);
-			event_create.current_time = myVideo.currentTime;
+			tagTimelineEvent.current_time = myVideo.currentTime;
 			
-			$("body").trigger(event_create);
-			$("body").trigger(event);
+			$("body").trigger(tagTimelineEvent);
+			$("body").trigger(searchEvent);
 			
 			return false;
 		});
