@@ -20,20 +20,19 @@ var tagsearch = {
 				console.log(data);
 				$("#search-results").html("");
 				$(data).each(function(index, item) {
-					$("#search-results").append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">Entity</h3><a class="btn btn-success pull-right" href="javascript:;">Enable</a></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">Title</p><h4 class="list-group-item-heading">' + item.title + '</h4></div><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div>');
+					$("#search-results").append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><a class="btn btn-success pull-right" href="javascript:;">Enable</a></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div>');
 				});
 			});
 		});
 		
 		$("body").on("tagtimeline", function (event) {
-			
 			$.ajax({
-  					type: "POST",
- 					 url: "/api/annotations/",
- 					 data: {current_time:event.current_time},
-  					success: function () {
-	  				console.log("success - tagsearch js");
-  					}
+				type: "POST",
+				url: "/api/annotations/",
+				data: {current_time:event.current_time},
+				success: function () {
+					console.log("success - tagsearch js");
+				}
 			});
 		});
 	}
