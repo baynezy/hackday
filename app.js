@@ -85,6 +85,14 @@ app.get("/examples/entityparser", function (req, res) {
 	});
 });
 
+app.get("/examples/entityparser", function (req, res) {
+	var text = "peter bone talks about human rights";
+	
+	parser.getEntitiesFromText(text, function(err, result) {
+		res.json(result);
+	});
+});
+
 */
 
 var server = app.listen(3000, function() {
