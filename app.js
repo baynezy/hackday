@@ -43,8 +43,8 @@ app.get("/dbpedia", function (req, res) {
 app.get("/entityparser", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
-	parser.getEntities(uri, function(data) {
-		res.json(data);
+	parser.getEntities(uri, function(err, result) {
+		res.json(result);
 	});
 });
 

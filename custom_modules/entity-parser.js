@@ -4,7 +4,7 @@ var miner = require("./wikiminer"),
 
 exports.getEntities = function(uri, callback) {
 	miner.extractEntities(uri, function (entities) {
-		async.map(entities, function (item, index) {
+		async.map(entities, function(item, callback) {
 			var newEntity = {
 				id : item.id,
 				title : item.title,
@@ -17,11 +17,11 @@ exports.getEntities = function(uri, callback) {
 					newEntity.uri = entity[0].URI[0];
 				}
 				
-				return newEntity;
+				callback(null, newEntity);
 			});
-		},
-		function (error, results) {
-			callback(results);
+		
+		}, function(err, results) {
+			callback(null, results);
 		});
 	});
 };
