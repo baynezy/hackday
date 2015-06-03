@@ -9,15 +9,26 @@ exports.getEntities = function(uri, callback) {
 				id : item.id,
 				title : item.title,
 				weight : item.weight,
-				uri : ""
+				uri : "",
+				description : ""
 			};
 			
 			dbpedia.getEntities(item.title, function(entity) {
-				if (entity.length > 0) {
-					newEntity.uri = entity[0].URI[0];
+				for (var i = 0; i < entity.length; i++) {
+					var uri = entity[i].URI[0];
+					var parts = uri.split("/");
+					var lastPart = parts[parts.length - 1].replace("_", " ");
+					
+					if (lastPart.toLowerCase() == item.title.toLowerCase()) {
+						newEntity.uri = uri;
+						newEntity.description = entity[i].Description[0];
+						break;
+					}
+				}
+				if (newEntity.uri.length > 0) {
+					callback(null, newEntity);
 				}
 				
-				callback(null, newEntity);
 			});
 		
 		}, function(err, results) {
@@ -33,20 +44,27 @@ exports.getEntitiesFromText = function(text, callback) {
 				id : item.id,
 				title : item.title,
 				weight : item.weight,
-				uri : ""
+				uri : "",
+				description : ""
 			};
 			
 			dbpedia.getEntities(item.title, function(entity) {
+				console.log(item.title);
 				for (var i = 0; i < entity.length; i++) {
 					var uri = entity[i].URI[0];
 					var parts = uri.split("/");
 					var lastPart = parts[parts.length - 1].replace("_", " ");
+					console.log(lastPart);
 					
 					if (lastPart.toLowerCase() == item.title.toLowerCase()) {
 						newEntity.uri = uri;
+						newEntity.description = entity[i].Description[0];
 						break;
 					}
 				}
+				
+				console.log(newEntity);
+				
 				if (newEntity.uri.length > 0) {
 					callback(null, newEntity);
 				}
@@ -54,6 +72,7 @@ exports.getEntitiesFromText = function(text, callback) {
 			});
 		
 		}, function(err, results) {
+			console.log(results);
 			callback(null, results);
 		});
 	});
