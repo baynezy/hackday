@@ -12,9 +12,9 @@ var tagsearch = {
 		$("body").on("tagsearch", function (event) {
 			$.get("/api/search/phrase/" + event.search, function(data) {
 				console.log(data);
-				$("#search-results ul").html("");
+				$("#search-results dl").html("");
 				$(data).each(function(index, item) {
-					$("#search-results ul").append('<li data-dbpedia="' + item.uri + '">' + item.title + '</ul>');
+					$("#search-results dl").append('<dt data-dbpedia="' + item.uri + '">' + item.title + '</dt><dd>' + item.description + '</dd>');
 				});
 			});
 		});
