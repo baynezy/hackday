@@ -7,20 +7,8 @@
 </head>
 <body>
 	<h1>{{head.title}}</h1>
+	{{>video-player}}
+	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<video controls id="myVideo">
- <source src="http://media.w3.org/2010/05/sintel/trailer.mp4"
-         type='video/mp4; codecs="avc1, mp4a"'>
- <source src="http://media.w3.org/2010/05/sintel/trailer.ogv"
-         type='video/ogg; codecs="theora, vorbis"'>
- <p>Your user agent does not support the HTML5 Video element.</p>
-</video>
-<button type="button" onclick="vid_tag()">Create Tag</button>
-<script>
-function vid_tag() {
-	var myVideo = document.getElementById("myVideo");
-	console.log(myVideo.currentTime);
-}
-</script>
 </body>
 </html>
