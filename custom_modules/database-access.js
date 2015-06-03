@@ -1,6 +1,6 @@
 //DB Setup
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath('./aws.database.json');
+AWS.config.loadFromPath('./aws.database_hidden.json');
 var dd = new AWS.DynamoDB();
 var tableName = 'bbchack-day-annotation';
   
