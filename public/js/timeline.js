@@ -13,17 +13,5 @@ var timeline = {
 			return false;
 			
 		});
-		
-		$("body").on("tagtimeline", function (event) {
-			
-			$.ajax({
-  					type: "POST",
- 					 url: "/api/annotations/",
- 					 data: {current_time:event.current_time},
-  					success: function () {
-	  				console.log("success");
-  					}
-			});
-		});
 	}
 };
