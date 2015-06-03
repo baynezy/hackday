@@ -16,7 +16,7 @@ app.use(express.static('./public'));
 app.get('/', function (req, res) {
   res.render('index', {
 	  head : {
-		  title : "Bite Me"
+		  title : "Prime Minister's Questions"
 	  }  
   });
 });
