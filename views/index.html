@@ -7,17 +7,7 @@
 </head>
 <body>
 	<h1>{{head.title}}</h1>
-	<div>
-		<form class="form-inline">
-			<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="exampleInputAmount" placeholder="Search for entities" />
-				</div>
-				<button type="submit" class="btn btn-primary"><spann class="glyphicon glyphicon-search"></span></button>
-			</div>
-		</form>
-	</div>
-	<script src="/js/tagsearch.js"></script>
+	{{>tag-search-form}}
 
 	{{>video-player}}
 	
