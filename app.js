@@ -27,7 +27,7 @@ app.get("/article", function(req, res) {
 app.get("/miner", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
-	miner.extractEntities(uri, function (data) {
+	miner.extractEntities(uri).then(function (data) {
 		res.json(data);
 	});
 });
@@ -35,7 +35,7 @@ app.get("/miner", function (req, res) {
 app.get("/dbpedia", function (req, res) {
 	var entity = "David Cameron";
 	
-	dbpedia.getEntities(entity, function(data) {
+	dbpedia.getEntities(entity).then(function(data) {
 		res.json(data);
 	});
 });

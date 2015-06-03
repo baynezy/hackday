@@ -1,5 +1,5 @@
 var apiUri = "http://wikipedia-miner.cms.waikato.ac.nz/services/wikify?",
-	request = require("request");
+	request = require("request-promise");
 
 exports.extractEntities = function (uri, callback) {
 	var queryString = "source=" + encodeURIComponent(uri);
@@ -8,9 +8,13 @@ exports.extractEntities = function (uri, callback) {
 	
 	var apiCall = apiUri + queryString;
 	
-	request(apiCall, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			callback(JSON.parse(body).detectedTopics);
+	var options = {
+		uri : apiCall,
+		method : "GET",
+		transform : function (data) {
+			return JSON.parse(data).detectedTopics;
 		}
-	});
+	};
+	
+	return request(options);
 };

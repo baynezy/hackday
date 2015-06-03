@@ -1,14 +1,22 @@
-var request = require("request"),
-	parseXml = require("xml2js").parseString;
+var request = require("request-promise"),
+	parseXml = require("xml2js").parseString,
+	q = require("q");
 
 exports.getEntities = function(entity, callback) {
 	var uri = "http://lookup.dbpedia.org/api/search/PrefixSearch?QueryClass=&MaxHits=5&QueryString=" + entity;
 	
-	request(uri, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			parseXml(body, function(err, result) {
-				callback(result.ArrayOfResult.Result);	
+	var options = {
+		uri : uri,
+		method : "GET",
+		transform : function (data) {
+			var deferred = q.defer();
+			parseXml(data, function(err, result) {
+				deferred.resolve = result.ArrayOfResult.Result;
 			});
+			
+			return deferred.promise;
 		}
-	});
+	};
+	
+	return request(options);
 };
