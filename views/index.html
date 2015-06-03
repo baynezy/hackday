@@ -7,15 +7,13 @@
 </head>
 <body>
 	<h1>{{head.title}}</h1>
-	{{>tag-search-form}}
-
+	
 	{{>video-player}}
 	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			tagsearch.init();
-		});
-	</script>
+	{{>tag-search-form}}
+	
+	{{>search-results}}
+	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script></script>
 </body>
 </html>
