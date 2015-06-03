@@ -14,7 +14,7 @@ var tagsearch = {
 				console.log(data);
 				$("#search-results dl").html("");
 				$(data).each(function(index, item) {
-					$("#search-results dl").append('<dt data-dbpedia="' + item.uri + '">' + item.title + '</dt><dd>' + item.description + '</dd>');
+					$("#search-results dl").append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">Entity</h3></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">Title</p><h4 class="list-group-item-heading">' + item.title + '</h4></div><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div>');
 				});
 			});
 		});
