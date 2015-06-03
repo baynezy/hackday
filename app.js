@@ -4,9 +4,16 @@ var express = require("express"),
 	dbpedia = require("./custom_modules/dbpedia"),
 	parser = require("./custom_modules/entity-parser"),
 	app = express();
+	
+app.get("/api/search/tag/:tag", function (req, res) {
+	dbpedia.getEntities(req.params.tag, function (data) {
+		res.json(data);
+	});
+});
 
+/* EXAMPLES
 
-app.get("/api", function(req, res) {
+app.get("/examples", function(req, res) {
 	var params = {
 		q : "chelsea",
 		size : 10
@@ -16,7 +23,7 @@ app.get("/api", function(req, res) {
 	});
 });
 
-app.get("/api/article", function(req, res) {
+app.get("/examples/article", function(req, res) {
 	var uri = "http://www.bbc.co.uk/news/business-31980802";
 	
 	juicer.getArticle(uri, function(article) {
@@ -24,7 +31,7 @@ app.get("/api/article", function(req, res) {
 	});
 });
 
-app.get("/api/miner", function (req, res) {
+app.get("/examples/miner", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
 	miner.extractEntities(uri, function (data) {
@@ -32,7 +39,7 @@ app.get("/api/miner", function (req, res) {
 	});
 });
 
-app.get("/api/dbpedia", function (req, res) {
+app.get("/examples/dbpedia", function (req, res) {
 	var entity = "David Cameron";
 	
 	dbpedia.getEntities(entity, function(data) {
@@ -40,13 +47,15 @@ app.get("/api/dbpedia", function (req, res) {
 	});
 });
 
-app.get("/api/entityparser", function (req, res) {
+app.get("/examples/entityparser", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
 	parser.getEntities(uri, function(err, result) {
 		res.json(result);
 	});
 });
+
+*/
 
 var server = app.listen(3000, function() {
 	
