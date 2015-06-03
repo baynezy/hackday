@@ -27,6 +27,12 @@ app.get("/api/search/tag/:tag", function (req, res) {
 	});
 });
 
+app.get("/api/search/phrase/:phrase", function (req, res) {
+	parser.getEntitiesFromText(req.params.phrase, function(err, data) {
+		res.json(data);
+	});
+});
+
 /* EXAMPLES
 
 app.get("/examples", function(req, res) {
@@ -51,6 +57,14 @@ app.get("/examples/miner", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
 	miner.extractEntities(uri, function (data) {
+		res.json(data);
+	});
+});
+
+app.get("/examples/miner", function (req, res) {
+	var text = "Harriet Harman asks about child benefit";
+	
+	miner.extractEntitiesFromText(text, function (data) {
 		res.json(data);
 	});
 });
