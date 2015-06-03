@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-	
 	<title>{{head.title}}</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
 	<h1>{{head.title}}</h1>
+	
 	{{>video-player}}
 	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	{{>tag-search-form}}
+	
+	{{>search-results}}
+	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script></script>
 </body>
 </html>
