@@ -4,6 +4,8 @@ var express = require("express"),
 	dbpedia = require("./custom_modules/dbpedia"),
 	parser = require("./custom_modules/entity-parser"),
 	mustacheExpress = require('mustache-express'),
+	databaseaccess = require("./custom_modules/database-access"),
+	bodyParser = require('body-parser'),
 	app = express();
 	
 app.engine('html', mustacheExpress());
@@ -13,12 +15,23 @@ app.set('view engine', 'html');
 
 app.use(express.static('./public'));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get('/', function (req, res) {
   res.render('index', {
 	  head : {
 		  title : "Prime Minister's Questions"
 	  }  
   });
+});
+
+app.post("/api/annotations", function (req, res) {
+	console.log("POST: ");
+  	console.log(req.body);
+	  var d = new Date();
+	  
+	databaseaccess.createAnnotationForVideo(d.getTime().toString(), req.body.current_time, 'video_id-1');
+	res.json({})
 });
 
 app.get("/api/search/tag/:tag", function (req, res) {
@@ -87,6 +100,6 @@ app.get("/examples/entityparser", function (req, res) {
 
 */
 
-var server = app.listen(3000, function() {
+var server = app.listen(8081, function() {
 	
 });
