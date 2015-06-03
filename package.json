@@ -6,6 +6,7 @@
   "author": "Simon Baynes",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.1.0",
     "express": "^4.12.4",
     "request": "^2.57.0",
     "xml2js": "^0.4.9"
