@@ -4,7 +4,13 @@ var express = require("express"),
 	dbpedia = require("./custom_modules/dbpedia"),
 	parser = require("./custom_modules/entity-parser"),
 	app = express();
+	
+app.set('views', './views')
+app.set('view engine', 'jade');
 
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!'});
+});
 
 app.get("/api", function(req, res) {
 	var params = {
