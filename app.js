@@ -3,13 +3,22 @@ var express = require("express"),
 	miner = require("./custom_modules/wikiminer"),
 	dbpedia = require("./custom_modules/dbpedia"),
 	parser = require("./custom_modules/entity-parser"),
+	mustacheExpress = require('mustache-express'),
 	app = express();
 	
+app.engine('html', mustacheExpress());
+	
 app.set('views', './views')
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
+
+app.use(express.static('./public'));
 
 app.get('/', function (req, res) {
-  res.render('index', { title: 'Hey', message: 'Hello there!'});
+  res.render('index', {
+	  head : {
+		  title : "Bite Me"
+	  }  
+  });
 });
 
 app.get("/api/search/tag/:tag", function (req, res) {
