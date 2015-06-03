@@ -10,7 +10,13 @@ var tagsearch = {
 		});
 		
 		$("body").on("tagsearch", function (event) {
-			$("#search-results").text(event.search);
+			$.get("/api/search/phrase/" + event.search, function(data) {
+				console.log(data);
+				$("#search-results ul").html("");
+				$(data).each(function(index, item) {
+					$("#search-results ul").append('<li data-dbpedia="' + item.uri + '">' + item.title + '</ul>');
+				});
+			});
 		});
 	}
 };
