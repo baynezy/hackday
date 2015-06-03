@@ -6,7 +6,7 @@ var express = require("express"),
 	app = express();
 
 
-app.get("/", function(req, res) {
+app.get("/api", function(req, res) {
 	var params = {
 		q : "chelsea",
 		size : 10
@@ -16,7 +16,7 @@ app.get("/", function(req, res) {
 	});
 });
 
-app.get("/article", function(req, res) {
+app.get("/api/article", function(req, res) {
 	var uri = "http://www.bbc.co.uk/news/business-31980802";
 	
 	juicer.getArticle(uri, function(article) {
@@ -24,7 +24,7 @@ app.get("/article", function(req, res) {
 	});
 });
 
-app.get("/miner", function (req, res) {
+app.get("/api/miner", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
 	miner.extractEntities(uri, function (data) {
@@ -32,7 +32,7 @@ app.get("/miner", function (req, res) {
 	});
 });
 
-app.get("/dbpedia", function (req, res) {
+app.get("/api/dbpedia", function (req, res) {
 	var entity = "David Cameron";
 	
 	dbpedia.getEntities(entity, function(data) {
@@ -40,7 +40,7 @@ app.get("/dbpedia", function (req, res) {
 	});
 });
 
-app.get("/entityparser", function (req, res) {
+app.get("/api/entityparser", function (req, res) {
 	var uri = "http://www.bbc.co.uk/news/uk-scotland-scotland-politics-32970337";
 	
 	parser.getEntities(uri, function(err, result) {
