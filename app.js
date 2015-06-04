@@ -6,6 +6,7 @@ var express = require("express"),
 	mustacheExpress = require('mustache-express'),
 	databaseaccess = require("./custom_modules/database-access"),
 	bodyParser = require('body-parser'),
+	url = require("url"),
 	app = express();
 	
 app.engine('html', mustacheExpress());
@@ -43,6 +44,15 @@ app.get("/api/search/tag/:tag", function (req, res) {
 app.get("/api/search/phrase/:phrase", function (req, res) {
 	parser.getEntitiesFromText(req.params.phrase, function(err, data) {
 		res.json(data);
+	});
+});
+
+app.get("/api/search/articles", function (req, res) {
+	var url_parts = url.parse(req.url, true);
+	var query = url_parts.query;
+	
+	juicer.getArticles(query, function(articles){
+		res.json(articles);
 	});
 });
 

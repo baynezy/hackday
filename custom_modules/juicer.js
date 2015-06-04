@@ -5,6 +5,8 @@ var apiKey = "3O320TNQSzygKXF8frRiNBQnAANSyUl7",
 exports.getArticles = function (params, callback) {
 	var uri = "http://data.test.bbc.co.uk/bbcrd-juicer/articles?apikey=" + apiKey;
 	
+	console.log(params);
+	
 	if (params.q != undefined) uri += "&q=" + params.q;
 	if (params.sources != undefined) uri += convert("sources", params.sources);
 	if (params.facets != undefined) uri += convert("facets", params.facets);
@@ -40,9 +42,10 @@ exports.getArticle = function (uri, callback) {
 
 function convert(param, source) {
 	var result = "";
+	var split = source.split(",");
 	
-	for (var i = 0; i < source.length; i++) {
-		result += "&" + param + "[]=" + source[i];
+	for (var i = 0; i < split.length; i++) {
+		result += "&" + param + "[]=" + split[i];
 	}
 	
 	return result;
