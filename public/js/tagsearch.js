@@ -1,7 +1,9 @@
 var tagsearch = {
 	init : function() {
-		$("form#frm-tag-search").on("submit", function () {
-			var event = jQuery.Event("tagsearch");
+		
+		$("#create-new-annotation").on("click", function () {
+			
+			var event_tagsearch = jQuery.Event("tagsearch");
 			event.search = $("#annotation-title").val();
 			
 			var event_create = jQuery.Event("tagtimeline");
@@ -10,9 +12,17 @@ var tagsearch = {
 			event_create.current_time = myVideo.currentTime;
 			
 			$("body").trigger(event_create);
-			$("body").trigger(event);
+			$("body").trigger(event_tagsearch);
 			
 			return false;
+			
+		});
+		
+		$("#update-annotation").on("click", function () {
+			
+			//NOT FINISHED
+			return false;
+			
 		});
 		
 		$("body").on("tagsearch", function (event) {
@@ -25,6 +35,20 @@ var tagsearch = {
 			});
 		});
 		
+		$("body").on("update_annotation", function (event) {
+			
+			//NOT FINISHED
+			$.ajax({
+    			type: "PUT",
+   				url: "/api/put_annotations/",
+    			contentType: "application/json",
+    			data: {"data": "mydata"},
+				success: function () {
+	  				console.log("success PUT - tagsearch js");
+  					}
+			});
+				
+		
 		$("body").on("tagtimeline", function (event) {
 			
 			$.ajax({
@@ -32,7 +56,7 @@ var tagsearch = {
  					 url: "/api/annotations/",
  					 data: {current_time:event.current_time},
   					success: function () {
-	  				console.log("success - tagsearch js");
+	  				console.log("success - POST tagsearch js");
   					}
 			});
 		});

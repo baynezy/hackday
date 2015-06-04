@@ -25,6 +25,12 @@ app.get('/', function (req, res) {
   });
 });
 
+// app.put("/api/put_annotations/"), function (req, res) {
+	
+// 	console.log("PUT: ");
+//   	console.log(req.body);
+// });
+
 app.post("/api/annotations", function (req, res) {
 	console.log("POST: ");
   	console.log(req.body);
