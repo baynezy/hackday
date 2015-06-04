@@ -50,13 +50,40 @@ var tagsearch = {
 		});
 		
 		$("body").on("tagsearch", function (event) {
+			$("#search-results").html("");
 			$.get("/api/search/phrase/" + event.search, function(data) {
 				console.log(data);
-				$("#search-results").html("");
+				var dataCardSearchEvent = jQuery.Event("dataCardSearchEvent");
+				dataCardSearchEvent.items = data;
+				
+				console.log(dataCardSearchEvent);
+				
+				$("body").trigger(dataCardSearchEvent);
+				
 				$(data).each(function(index, item) {
-					$("#search-results").append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><button class="btn btn-success pull-right" data-dbpedia="' + item.uri + '" data-id="'+ item.id + '">Enable</button></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div><div id="results-'+ item.id + '" style="display:none;" class="news-cards"></div>');
+					$("#search-results").append(tagsearch.topLevelItem(item));
 				});
 			});
+		});
+		
+		$("body").on("dataCardSearchEvent", function(event) {
+			console.log(event);
+			for (var i = 0; i < event.items.length; i++) {
+				$.get("/api/search/datacard/" + event.items[i].title, function(data) {
+					console.log(data);
+					$(data).each(function(index, item) {
+						if (typeof(item.Item) != "undefined") {
+							var card = {
+								id : item.Item.dataCardID.S,
+								title : "Data Card: " + item.Item.name.S,
+								description : item.Item.embedCode.S,
+								uri : ""
+							};
+							$("#search-results").append(tagsearch.topLevelItem(card));
+						}
+					});
+				});
+			}
 		});
 		
 		$("body").on("tagtimeline", function (event) {
@@ -118,5 +145,9 @@ var tagsearch = {
 		$("#edit-only").show();
 		$("#edit-annotation").show();
 		$("#create-new-annotation").hide();
+	},
+	
+	topLevelItem : function(item) {
+		return '<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><button class="btn btn-success pull-right" data-dbpedia="' + item.uri + '" data-id="'+ item.id + '">Enable</button></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div><div id="results-'+ item.id + '" style="display:none;" class="news-cards"></div>';
 	}
 };

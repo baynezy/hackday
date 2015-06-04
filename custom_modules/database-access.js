@@ -54,3 +54,15 @@ exports.updateAnnotationForVideo = function(annotationID, currentTime, videoID, 
       console.log(data);
    });
 };
+
+exports.getDataCards = function(name, callback) {
+   console.log(name);
+   dd.getItem({
+      'TableName': 'bbchack-day-datacard',
+      'Key': {'dataCardID' : {'S' : name.toLowerCase()}}
+   }, function(err, data) {
+      console.log(err)
+      console.log(data);
+      callback(err, data);
+   });
+};

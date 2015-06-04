@@ -7,6 +7,8 @@ var express = require("express"),
 	databaseaccess = require("./custom_modules/database-access"),
 	bodyParser = require('body-parser'),
 	url = require("url"),
+	combiner = require("./custom_modules/combiner"),
+	async = require("async"),
 	app = express();
 	
 app.engine('html', mustacheExpress());
@@ -25,12 +27,6 @@ app.get('/', function (req, res) {
 	  }  
   });
 });
-
-// app.put("/api/put_annotations/"), function (req, res) {
-	
-// 	console.log("PUT: ");
-//   	console.log(req.body);
-// });
 
 app.post("/api/annotations", function (req, res) {
 	console.log("POST: ");
@@ -66,6 +62,24 @@ app.get("/api/search/articles", function (req, res) {
 	
 	juicer.getArticles(query, function(articles){
 		res.json(articles);
+	});
+});
+
+app.get("/api/search/datacard/:name", function(req, res) {
+	databaseaccess.getDataCards(req.params.name, function(err, data) {
+		res.json(data);
+	});
+});
+
+app.get("/api/search/all/:phrase", function(req, res) {
+	var final;
+	
+	parser.getEntitiesFromText(req.params.phrase, function(err, data) {
+		final = data;
+		
+		async.map(data, databaseaccess.getDataCards, function(err, data) {
+			final.concat(data);
+		});
 	});
 });
 
