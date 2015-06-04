@@ -11,14 +11,29 @@ var tagsearch = {
 				var tagTimelineEvent = jQuery.Event("tagtimeline");
 				var myVideo = document.getElementById("myVideo");
 				console.log(myVideo.currentTime);
-				tagTimelineEvent.current_time = myVideo.currentTime;
-				tagTimelineEvent.annotation_id = new Date().getTime().toString();
+				
+				tagsearch.currentTime = myVideo.currentTime;
+				tagsearch.annotationId = new Date().getTime().toString();
+				
+				tagTimelineEvent.current_time = tagsearch.currentTime;
+				tagTimelineEvent.annotation_id = tagsearch.annotationId;
 				tagTimelineEvent.name = $("#annotation-title").val();
 				
 				$("body").trigger(tagTimelineEvent);
 				$("body").trigger(searchEvent);
 				
 				tagsearch.editForm();
+			}
+			else {
+				var updateTagEvent = jQuery.Event("updateTag");
+				updateTagEvent
+				updateTagEvent.current_time = tagsearch.currentTime;
+				updateTagEvent.annotation_id = tagsearch.annotationId;
+				updateTagEvent.name = $("#annotation-title").val();
+				updateTagEvent.quote = $("#quote-text").val();
+				updateTagEvent.comment = $("#comment-text").val();
+				
+				$("body").trigger(updateTagEvent);
 			}
 			
 			return false;
@@ -54,7 +69,24 @@ var tagsearch = {
 					name : event.name
 				},
 				success: function () {
-					console.log("success - tagsearch js");
+					
+				}
+			});
+		});
+		
+		$("body").on("updateTag", function (event) {
+			$.ajax({
+				type: "PUT",
+				url: "/api/annotations/",
+				data: {
+					current_time:event.current_time,
+					annotation_id : event.annotation_id,
+					name : event.name,
+					quote : event.quote,
+					comment : event.comment
+				},
+				success: function () {
+					
 				}
 			});
 		});

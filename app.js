@@ -40,6 +40,14 @@ app.post("/api/annotations", function (req, res) {
 	res.status(204).end();
 });
 
+app.put("/api/annotations", function (req, res) {
+	console.log("PUT: ");
+  	console.log(req.body);
+	  
+	databaseaccess.updateAnnotationForVideo(req.body.annotation_id, req.body.current_time, 'video_id-1', req.body.name, req.body.quote, req.body.comment);
+	res.status(204).end();
+});
+
 app.get("/api/search/tag/:tag", function (req, res) {
 	dbpedia.getEntities(req.params.tag, function (data) {
 		res.json(data);

@@ -21,10 +21,31 @@ exports.createAnnotationForVideo = function(annotationID, currentTime, videoID, 
    };
    
    console.log(annotation);
-   // if (userID) item.userID = { 'N': userID };
-   // item.level = { 'S': (level || 'info') };
-   // if (message) item.message = { 'S': message };
-   // if (details) item.details = { 'S': details }; 
+   dd.putItem({
+      'TableName': tableName,
+      'Item': annotation
+   }, function(err, data) {
+      console.log(err);
+      console.log(data);
+   });
+};
+  
+exports.updateAnnotationForVideo = function(annotationID, currentTime, videoID, name, quote, comment) {
+   console.log(AWS.config.accessKeyId);
+   console.log(AWS.config.secretAccessKey);
+   
+   var annotation = {
+      'annotationID': { 'S': annotationID },
+      'currentTime': { 'N': currentTime },
+      'videoID':{'S': videoID },
+      'name' : {'S' : name}
+   };
+   
+   if (quote != '') annotation.quote = {'S': quote };
+   if (comment != '') annotation.comment = {'S': comment };  
+   
+   console.log(annotation);
+   
    dd.putItem({
       'TableName': tableName,
       'Item': annotation
