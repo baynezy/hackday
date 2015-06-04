@@ -9,22 +9,27 @@ AWS.config.secretAccessKey = process.env.SECRET_ACCESS_KEY;
 var dd = new AWS.DynamoDB();
 var tableName = 'bbchack-day-annotation';
   
-  exports.createAnnotationForVideo = function(annotationID, currentTime, videoID) {
-     
-	 var annotation = {
-        'annotationID': { 'S': annotationID },
-        'currentTime': { 'N': currentTime },
-		'videoID':{'S': videoID }
-      };
-      // if (userID) item.userID = { 'N': userID };
-      // item.level = { 'S': (level || 'info') };
-      // if (message) item.message = { 'S': message };
-      // if (details) item.details = { 'S': details }; 
-      dd.putItem({
-         'TableName': tableName,
-         'Item': annotation
-      }, function(err, data) {
-         err && console.log(err);
-      });
+exports.createAnnotationForVideo = function(annotationID, currentTime, videoID, name) {
+   console.log(AWS.config.accessKeyId);
+   console.log(AWS.config.secretAccessKey);
+   
+   var annotation = {
+      'annotationID': { 'S': annotationID },
+      'currentTime': { 'N': currentTime },
+      'videoID':{'S': videoID },
+      'name' : {'S' : name}
    };
-// Use the function we just created...
+   
+   console.log(annotation);
+   // if (userID) item.userID = { 'N': userID };
+   // item.level = { 'S': (level || 'info') };
+   // if (message) item.message = { 'S': message };
+   // if (details) item.details = { 'S': details }; 
+   dd.putItem({
+      'TableName': tableName,
+      'Item': annotation
+   }, function(err, data) {
+      console.log(err);
+      console.log(data);
+   });
+};

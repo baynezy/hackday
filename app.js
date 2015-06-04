@@ -35,10 +35,9 @@ app.get('/', function (req, res) {
 app.post("/api/annotations", function (req, res) {
 	console.log("POST: ");
   	console.log(req.body);
-	  var d = new Date();
 	  
-	databaseaccess.createAnnotationForVideo(d.getTime().toString(), req.body.current_time, 'video_id-1');
-	res.json({})
+	databaseaccess.createAnnotationForVideo(req.body.annotation_id, req.body.current_time, 'video_id-1', req.body.name);
+	res.status(204).end();
 });
 
 app.get("/api/search/tag/:tag", function (req, res) {

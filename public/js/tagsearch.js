@@ -1,28 +1,37 @@
 var tagsearch = {
 	init : function() {
-		$("form#frm-tag-search").on("submit", function () {
-			var searchEvent = jQuery.Event("tagsearch");
-			searchEvent.search = $("#annotation-title").val();
-			
-			var tagTimelineEvent = jQuery.Event("tagtimeline");
-			var myVideo = document.getElementById("myVideo");
-			console.log(myVideo.currentTime);
-			tagTimelineEvent.current_time = myVideo.currentTime;
-			
-			$("body").trigger(tagTimelineEvent);
-			$("body").trigger(searchEvent);
-			
-			$("#search-results").delegate("button", "click", function() {
-				var uri = $(this).attr("data-dbpedia");
-				var id = $(this).attr("data-id");
-				var entitySelectedEvent = jQuery.Event("entitySelected");
-				entitySelectedEvent.uri = uri;
-				entitySelectedEvent.id = id;
+		tagsearch.createForm();
+		
+		$("form#frm-tag-search").on("submit", function (e) {
+			e.preventDefault();
+			if (!tagsearch.editing) {
+				var searchEvent = jQuery.Event("tagsearch");
+				searchEvent.search = $("#annotation-title").val();
 				
-				$("body").trigger(entitySelectedEvent);
-			});
+				var tagTimelineEvent = jQuery.Event("tagtimeline");
+				var myVideo = document.getElementById("myVideo");
+				console.log(myVideo.currentTime);
+				tagTimelineEvent.current_time = myVideo.currentTime;
+				tagTimelineEvent.annotation_id = new Date().getTime().toString();
+				tagTimelineEvent.name = $("#annotation-title").val();
+				
+				$("body").trigger(tagTimelineEvent);
+				$("body").trigger(searchEvent);
+				
+				tagsearch.editForm();
+			}
 			
 			return false;
+		});
+			
+		$("#search-results").delegate("button", "click", function() {
+			var uri = $(this).attr("data-dbpedia");
+			var id = $(this).attr("data-id");
+			var entitySelectedEvent = jQuery.Event("entitySelected");
+			entitySelectedEvent.uri = uri;
+			entitySelectedEvent.id = id;
+			
+			$("body").trigger(entitySelectedEvent);
 		});
 		
 		$("body").on("tagsearch", function (event) {
@@ -39,7 +48,11 @@ var tagsearch = {
 			$.ajax({
 				type: "POST",
 				url: "/api/annotations/",
-				data: {current_time:event.current_time},
+				data: {
+					current_time:event.current_time,
+					annotation_id : event.annotation_id,
+					name : event.name
+				},
 				success: function () {
 					console.log("success - tagsearch js");
 				}
@@ -59,5 +72,19 @@ var tagsearch = {
 				$("#results-" + event.id).show();
 			});
 		});
+	},
+	
+	createForm : function() {
+		tagsearch.editing = false;
+		$("#edit-only").hide();
+		$("#edit-annotation").hide();
+		$("#create-new-annotation").show();
+	},
+	
+	editForm : function() {
+		tagsearch.editing = true;
+		$("#edit-only").show();
+		$("#edit-annotation").show();
+		$("#create-new-annotation").hide();
 	}
 };

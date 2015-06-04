@@ -2,11 +2,17 @@
 	<form id="frm-tag-search" class="form-inline">
 		<div class="form-group">
 			<div class="input-group">
-				<input type="text" class="form-control" id="annotation-title" placeholder="Annotation Title..." />
-				<input type="text" class="form-control" id="quote-text" placeholder="Quote Text..." />
-				<input type="text" class="form-control" id="comment-text" placeholder="Comment Text..." />
+				<div>
+					<input type="text" class="form-control" id="annotation-title" placeholder="Annotation Title..." />
+					<button type="submit" class="btn btn-primary" id="create-new-annotation"><span class="glyphicon glyphicon-pushpin"></span></button>
+					<button type="submit" class="btn btn-primary" id="edit-annotation"><span class="glyphicon glyphicon-pencil"></span></button>
+				</div>
+				<div id="edit-only">
+					<input type="text" class="form-control" id="quote-text" placeholder="Quote Text..." />
+					<input type="text" class="form-control" id="comment-text" placeholder="Comment Text..." />
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary" id="create-new-annotation"><span class="glyphicon glyphicon-flag"></span></button>
+			
 		</div>
 	</form>
 </div>
