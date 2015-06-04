@@ -12,6 +12,16 @@ var tagsearch = {
 			$("body").trigger(tagTimelineEvent);
 			$("body").trigger(searchEvent);
 			
+			$("#search-results").delegate("button", "click", function() {
+				var uri = $(this).attr("data-dbpedia");
+				var id = $(this).attr("data-id");
+				var entitySelectedEvent = jQuery.Event("entitySelected");
+				entitySelectedEvent.uri = uri;
+				entitySelectedEvent.id = id;
+				
+				$("body").trigger(entitySelectedEvent);
+			});
+			
 			return false;
 		});
 		
@@ -20,7 +30,7 @@ var tagsearch = {
 				console.log(data);
 				$("#search-results").html("");
 				$(data).each(function(index, item) {
-					$("#search-results").append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><a class="btn btn-success pull-right" href="javascript:;">Enable</a></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div>');
+					$("#search-results").append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><button class="btn btn-success pull-right" data-dbpedia="' + item.uri + '" data-id="'+ item.id + '">Enable</button></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div><div id="results-'+ item.id + '" style="display:none;" class="news-cards"></div>');
 				});
 			});
 		});
@@ -33,6 +43,20 @@ var tagsearch = {
 				success: function () {
 					console.log("success - tagsearch js");
 				}
+			});
+		});
+		
+		$("body").on("entitySelected", function (event) {
+			console.log("Entity Selected");
+			console.log(event);
+			$.get("/api/search/articles?facets=" + event.uri, function(data) {
+				console.log(data);
+				
+				$(data.hits).each(function (index, item) {
+					$("#results-" + event.id).append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><button class="btn btn-success pull-right">Select</button></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div>');
+				});
+				
+				$("#results-" + event.id).show();
 			});
 		});
 	}

@@ -2,3 +2,11 @@ video {
   width: 100%    !important;
   height: auto   !important;
 }
+
+.news-cards {
+  padding: 20px;
+}
+
+.news-cards .panel-heading {
+  background-color: #c2c2c2;
+}
