@@ -5,8 +5,6 @@ var apiKey = "3O320TNQSzygKXF8frRiNBQnAANSyUl7",
 exports.getArticles = function (params, callback) {
 	var uri = "http://data.test.bbc.co.uk/bbcrd-juicer/articles?apikey=" + apiKey;
 	
-	console.log(params);
-	
 	if (params.q != undefined) uri += "&q=" + params.q;
 	if (params.sources != undefined) uri += convert("sources", params.sources);
 	if (params.facets != undefined) uri += convert("facets", params.facets);
@@ -17,8 +15,6 @@ exports.getArticles = function (params, callback) {
 	if (params.recent_first != undefined) uri += "&recent_first=" + params.recent_first;
 	if (params["like-text"] != undefined) uri += "&like-text=" + params["like-text"];
 	if (params["like-ids"] != undefined) uri += convert("like-ids", params["like-ids"]);
-	
-	console.log(uri);
 	
 	request(uri, function (error, response, body) {
 		if (!error && response.statusCode == 200) {

@@ -29,34 +29,34 @@ app.get('/', function (req, res) {
 });
 
 app.post("/api/annotations", function (req, res) {
-	console.log("POST: ");
-  	console.log(req.body);
-	  
+	console.log("called POST annotations");
 	databaseaccess.createAnnotationForVideo(req.body.annotation_id, req.body.current_time, 'video_id-1', req.body.name);
 	res.status(204).end();
 });
 
 app.put("/api/annotations", function (req, res) {
-	console.log("PUT: ");
-  	console.log(req.body);
-	  
+	console.log("called PUT annotations");
 	databaseaccess.updateAnnotationForVideo(req.body.annotation_id, req.body.current_time, 'video_id-1', req.body.name, req.body.quote, req.body.comment);
 	res.status(204).end();
 });
 
 app.get("/api/search/tag/:tag", function (req, res) {
+	console.log("called dbpedia tag");
 	dbpedia.getEntities(req.params.tag, function (data) {
 		res.json(data);
 	});
 });
 
 app.get("/api/search/phrase/:phrase", function (req, res) {
+	console.log("called phrase search");
 	parser.getEntitiesFromText(req.params.phrase, function(err, data) {
 		res.json(data);
 	});
 });
 
 app.get("/api/search/articles", function (req, res) {
+	console.log("called article search");
+	
 	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;
 	
@@ -66,12 +66,16 @@ app.get("/api/search/articles", function (req, res) {
 });
 
 app.get("/api/search/datacard/:name", function(req, res) {
+	console.log("called datacard search");
+	
 	databaseaccess.getDataCards(req.params.name, function(err, data) {
 		res.json(data);
 	});
 });
 
 app.get("/api/search/all/:phrase", function(req, res) {
+	console.log("called phrase search");
+	
 	var final;
 	
 	parser.getEntitiesFromText(req.params.phrase, function(err, data) {
