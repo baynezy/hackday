@@ -10,17 +10,14 @@ var dd = new AWS.DynamoDB();
 var tableName = 'bbchack-day-annotation';
   
 exports.createAnnotationForVideo = function(annotationID, currentTime, videoID, name) {
-   console.log(AWS.config.accessKeyId);
-   console.log(AWS.config.secretAccessKey);
-   
-   var annotation = {
+  var annotation = {
       'annotationID': { 'S': annotationID },
       'currentTime': { 'N': currentTime },
       'videoID':{'S': videoID },
       'name' : {'S' : name}
    };
    
-   console.log(annotation);
+   
    dd.putItem({
       'TableName': tableName,
       'Item': annotation
@@ -31,9 +28,6 @@ exports.createAnnotationForVideo = function(annotationID, currentTime, videoID, 
 };
   
 exports.updateAnnotationForVideo = function(annotationID, currentTime, videoID, name, quote, comment) {
-   console.log(AWS.config.accessKeyId);
-   console.log(AWS.config.secretAccessKey);
-   
    var annotation = {
       'annotationID': { 'S': annotationID },
       'currentTime': { 'N': currentTime },
@@ -43,8 +37,6 @@ exports.updateAnnotationForVideo = function(annotationID, currentTime, videoID, 
    
    if (quote != '') annotation.quote = {'S': quote };
    if (comment != '') annotation.comment = {'S': comment };  
-   
-   console.log(annotation);
    
    dd.putItem({
       'TableName': tableName,
@@ -56,7 +48,6 @@ exports.updateAnnotationForVideo = function(annotationID, currentTime, videoID, 
 };
 
 exports.getDataCards = function(name, callback) {
-   console.log(name);
    dd.getItem({
       'TableName': 'bbchack-day-datacard',
       'Key': {'dataCardID' : {'S' : name.toLowerCase()}}

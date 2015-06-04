@@ -29,17 +29,11 @@ app.get('/', function (req, res) {
 });
 
 app.post("/api/annotations", function (req, res) {
-	console.log("POST: ");
-  	console.log(req.body);
-	  
 	databaseaccess.createAnnotationForVideo(req.body.annotation_id, req.body.current_time, 'video_id-1', req.body.name);
 	res.status(204).end();
 });
 
 app.put("/api/annotations", function (req, res) {
-	console.log("PUT: ");
-  	console.log(req.body);
-	  
 	databaseaccess.updateAnnotationForVideo(req.body.annotation_id, req.body.current_time, 'video_id-1', req.body.name, req.body.quote, req.body.comment);
 	res.status(204).end();
 });

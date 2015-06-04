@@ -19,10 +19,6 @@ exports.getResults = function(phrase, callback) {
 			});
 		
 		}, function(err, results) {
-			console.log("entities");
-			console.log(entities);
-			console.log("results");
-			console.log(results);
 			var final = entities.concat(results);
 			callback(null, final);
 		});
