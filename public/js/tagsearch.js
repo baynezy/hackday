@@ -1,6 +1,5 @@
 var tagsearch = {
 	init : function() {
-
 		$("form#frm-tag-search").on("submit", function () {
 			var searchEvent = jQuery.Event("tagsearch");
 			searchEvent.search = $("#annotation-title").val();
@@ -14,14 +13,6 @@ var tagsearch = {
 			$("body").trigger(searchEvent);
 			
 			return false;
-			
-		});
-		
-		$("#update-annotation").on("click", function () {
-			
-			//NOT FINISHED
-			return false;
-			
 		});
 		
 		$("body").on("tagsearch", function (event) {
@@ -33,20 +24,6 @@ var tagsearch = {
 				});
 			});
 		});
-		
-		$("body").on("update_annotation", function (event) {
-			
-			//NOT FINISHED
-			$.ajax({
-    			type: "PUT",
-   				url: "/api/put_annotations/",
-    			contentType: "application/json",
-    			data: {"data": "mydata"},
-				success: function () {
-	  				console.log("success PUT - tagsearch js");
-  					}
-			});
-				
 		
 		$("body").on("tagtimeline", function (event) {
 			$.ajax({
