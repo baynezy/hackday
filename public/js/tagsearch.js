@@ -3,6 +3,7 @@ var tagsearch = {
 		tagsearch.createForm();
 		
 		$("form#frm-tag-search").on("submit", function (e) {
+			console.log("Submit Search")
 			e.preventDefault();
 			if (!tagsearch.editing) {
 				var searchEvent = jQuery.Event("tagsearch");
@@ -10,7 +11,6 @@ var tagsearch = {
 				
 				var tagTimelineEvent = jQuery.Event("tagtimeline");
 				var myVideo = document.getElementById("myVideo");
-				console.log(myVideo.currentTime);
 				
 				tagsearch.currentTime = myVideo.currentTime;
 				tagsearch.annotationId = new Date().getTime().toString();
@@ -50,13 +50,11 @@ var tagsearch = {
 		});
 		
 		$("body").on("tagsearch", function (event) {
+			console.log("Tag Search Event");
 			$("#search-results").html("");
 			$.get("/api/search/phrase/" + event.search, function(data) {
-				console.log(data);
 				var dataCardSearchEvent = jQuery.Event("dataCardSearchEvent");
 				dataCardSearchEvent.items = data;
-				
-				console.log(dataCardSearchEvent);
 				
 				$("body").trigger(dataCardSearchEvent);
 				
@@ -67,10 +65,9 @@ var tagsearch = {
 		});
 		
 		$("body").on("dataCardSearchEvent", function(event) {
-			console.log(event);
+			console.log("Data Card Search Event");
 			for (var i = 0; i < event.items.length; i++) {
 				$.get("/api/search/datacard/" + event.items[i].title, function(data) {
-					console.log(data);
 					$(data).each(function(index, item) {
 						if (typeof(item.Item) != "undefined") {
 							var card = {
@@ -87,6 +84,7 @@ var tagsearch = {
 		});
 		
 		$("body").on("tagtimeline", function (event) {
+			console.log("Tag Timeline Event");
 			$.ajax({
 				type: "POST",
 				url: "/api/annotations/",
@@ -102,6 +100,7 @@ var tagsearch = {
 		});
 		
 		$("body").on("updateTag", function (event) {
+			console.log("Update Tag Event");
 			$.ajax({
 				type: "PUT",
 				url: "/api/annotations/",
@@ -119,10 +118,8 @@ var tagsearch = {
 		});
 		
 		$("body").on("entitySelected", function (event) {
-			console.log("Entity Selected");
-			console.log(event);
+			console.log("Entity Selected Event");
 			$.get("/api/search/articles?facets=" + event.uri, function(data) {
-				console.log(data);
 				
 				$(data.hits).each(function (index, item) {
 					$("#results-" + event.id).append('<div class="panel panel-default"><div class="panel-heading clearfix"><h3 class="panel-title pull-left">' + item.title + '</h3><button class="btn btn-success pull-right">Select</button></div><div class="list-group"><div class="list-group-item"><p class="list-group-item-text">' + item.description + '</p></div></div></div>');
