@@ -1,0 +1,6 @@
+var timeline = {
+	
+	init : function () {
+
+	}
+};
